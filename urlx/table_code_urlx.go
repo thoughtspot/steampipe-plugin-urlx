@@ -108,8 +108,8 @@ func readDataHTTP(ctx context.Context, s_url string, b_get_data bool) (map[strin
 
     var sb_data strings.Builder
     var i_size_total int = 0
-    var i_size_max int = 20000000
-    var i_read_buff int = 102400
+    var i_size_max int = 20971520 // 20MB
+    var i_read_buff int = 4096
     var b_eof bool = false
     buff := make([]byte, i_read_buff)
     for i_size_total < i_size_max {

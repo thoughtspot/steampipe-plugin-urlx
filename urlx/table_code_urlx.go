@@ -108,7 +108,7 @@ func readDataHTTP(ctx context.Context, s_url string, b_get_data bool) (map[strin
 
     var sb_data strings.Builder
     var i_size_total int = 0
-    var i_size_max int = 20971520 // 20MB
+    var i_size_max int = 20971520
     var i_read_buff int = 4096
     var b_eof bool = false
     buff := make([]byte, i_read_buff)
@@ -129,17 +129,16 @@ func readDataHTTP(ctx context.Context, s_url string, b_get_data bool) (map[strin
         s_data := string(buff[:bytesRead])
         s_data = strings.Replace(s_data, "\r\n", "\n", -1) // handle DOS/Windows newlines
         s_data = strings.Replace(s_data, "\r", "\n", -1) // handle DOS/Windows newlines
-        i_size_total = len(sb_data.String())
+        // i_size_total = len(sb_data.String())
+        i_size_total = (i_size_total + bytesRead)
         plugin.Logger(ctx).Debug("readData Read [2000][" + s_url + "][" + strconv.Itoa(i_size_total) + "]")
         sb_data.WriteString(sanitizeUTF8(s_data))
     }
 
 
-
-
-
 	s_final_data := sb_data.String()
     sb_data.Reset()
+
     var i_start_content int = (strings.Index(s_final_data, "\n\n") + 2)
     s_final_data = s_final_data[i_start_content:]
     if b_eof == false {
@@ -152,6 +151,10 @@ func readDataHTTP(ctx context.Context, s_url string, b_get_data bool) (map[strin
 	sampleLines := 4
 	detector.Configure(&sampleLines, nil)
 	delimiters := detector.DetectDelimiter(strings.NewReader(s_final_data), '"')
+
+	if len(delimiters) == 0 {
+    	return nil, nil, nil
+    }
 
 	// read data into csv to take advantage of csv functions
     nr := csv.NewReader(strings.NewReader(s_final_data))

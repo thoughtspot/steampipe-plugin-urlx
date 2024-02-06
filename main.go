@@ -1,7 +1,7 @@
 package main
 
 import (
-        "github.com/Sangamesh-ts/steampipe-plugin-urlx/urlx"
+        "github.com/rratshinwork/steampipe-plugin-urlx/urlx"
         "github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 )
 

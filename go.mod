@@ -1,9 +1,8 @@
-module github.com/rratshinwork/steampipe-plugin-urlx
+module github.com/thoughtspot/steampipe-plugin-urlx
 
 go 1.21.0
 
 require (
-	github.com/Sangamesh-ts/steampipe-plugin-urlx v0.0.0-20240206163755-d71746d35283
 	github.com/turbot/go-kit v0.9.0
 	github.com/turbot/steampipe-plugin-sdk/v5 v5.8.0
 )

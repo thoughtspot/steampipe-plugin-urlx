@@ -139,8 +139,6 @@ func readDataHTTP(ctx context.Context, s_url string, b_get_data bool) (map[strin
 	s_final_data := sb_data.String()
     sb_data.Reset()
 
-    var i_start_content int = (strings.Index(s_final_data, "\n\n") + 2)
-    s_final_data = s_final_data[i_start_content:]
     if b_eof == false {
         var i_final_newline int = strings.LastIndex(s_final_data, "\n")
         s_final_data = s_final_data[0:i_final_newline]
